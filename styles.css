@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --night:#0C120C;
+    --engineeringOrange: #C20114;
+    --dimGray:#6D7275;
+    --ashGray:#C7D6D5;
+    --ghostWhite: #ECEBF3;
+}
+
+.header{
+    width:100vw;
+    height: 20vh;    
+    background-color: var(--night);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1{
+    font-family: 'Edu NSW ACT Cursive', 'Roboto';
+    color: var(--ashGray);
+}
+
+button{
+    height: 5vh;
+    width: 10vh;
+    border-radius: 10px;
+    background-color: var(--engineeringOrange);
+}
+
+.body{
+    width: 100vw;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer{
+    width: 100vw;
+    height: 5vh;
+    background-color: var(--night);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer p{
+    font-family: 'Edu NSW ACT Cursive', 'Roboto';
+    color: var(--ashGray);
+}
+
+
+table{
+    border: 5px solid orange;
+    width: 90%;
+    height: 90%;
+}
+
+table tr{
+    background-color: red;
+    
+}

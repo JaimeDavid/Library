@@ -1,3 +1,17 @@
+const addBook = document.querySelector('.add');
+
+
+function addRow(){
+    let table = document.querySelector('.table');
+    let row = document.createElement('tr');
+    for (let i = 0; i < 4; i++){
+        let cell = document.createElement('td')
+        row.appendChild(cell);
+    }
+    table.appendChild(row);
+}
+addBook.addEventListener('click', addRow);
+
 function Book(title, author, pages, read){
     //safeguard for constructor, so it must always be called with new//
     if(!new.target){

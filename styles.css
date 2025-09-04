@@ -56,13 +56,16 @@ button{
 }
 
 
-table{
-    border: 5px solid orange;
+table{    
     width: 90%;
     height: 90%;
+    font-family: 'Roboto';
+   
 }
 
-table tr{
-    background-color: red;
-    
+td, th{
+    border: 1px solid var(--night);
+    padding: 1rem;
+    text-align: center;
 }
+

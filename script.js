@@ -1,17 +1,21 @@
-const addBook = document.querySelector('.add');
+//variables
+const myLibrary = [{ title: 'hoobit', author: 'me', pages: 100, read: 'Yes' },
+  { title: 'the Rabbit', author: 'you', pages: 300, read: 'Yes' }];
 
-
+//functions
+//addrow function adds row to the table that will hold the information
 function addRow(){
     let table = document.querySelector('.table');
     let row = document.createElement('tr');
+    row.classList.add("current");
     for (let i = 0; i < 4; i++){
         let cell = document.createElement('td')
+        cell.textContent ='h';
         row.appendChild(cell);
     }
     table.appendChild(row);
 }
-addBook.addEventListener('click', addRow);
-
+//Book constructor that will create the book that is required.
 function Book(title, author, pages, read){
     //safeguard for constructor, so it must always be called with new//
     if(!new.target){
@@ -22,9 +26,43 @@ function Book(title, author, pages, read){
     this.author = author;
     this.pages = pages;
     this.read = read;
-    // function that provides the information on the book
-    this.info = function(){
-        return this.title+' by '+this.author+', '+this.pages+' pages,'+this.read; ;
-    }
+}
+
+// Creates a book given the data, adds an ID and saves it in the array.
+function addBookToLibrary(title, author, pages, read){
+    
+    let book = new Book(title, author, pages, read);
+    book.id = crypto.randomUUID();
+    myLibrary.push(book);
 
 }
+//function that read everybook in the array and places it in the table
+
+function bookData(){
+    let table = document.querySelector('.table');
+    for(const book of myLibrary){        
+        let row = document.createElement('tr');
+        console.log(book);
+        for (const key in book){
+            let cell = document.createElement('td')
+            cell.textContent = book[key];
+            console.log(book[key]);
+            row.appendChild(cell);          
+
+        }
+        table.appendChild(row);
+    }
+}
+
+
+
+
+//Dom manipulation
+//HTML elements variables
+const addBook = document.querySelector('.add');
+
+
+
+// event listeners
+addBook.addEventListener('click', bookData);
+

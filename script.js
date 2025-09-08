@@ -46,7 +46,6 @@ function bookData(){
         for (const key in book){
             let cell = document.createElement('td')
             cell.textContent = book[key];
-            console.log(book[key]);
             row.appendChild(cell);          
 
         }
@@ -60,9 +59,17 @@ function bookData(){
 //Dom manipulation
 //HTML elements variables
 const addBook = document.querySelector('.add');
+const dialog = document.querySelector('dialog');
+const closeButon = document.querySelector('#submit');
 
 
 
 // event listeners
-addBook.addEventListener('click', bookData);
+addBook.addEventListener('click', ()=>{
+    dialog.showModal();
+});
+
+closeButon.addEventListener('click', () =>{
+    dialog.close();
+});
 

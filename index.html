@@ -21,9 +21,32 @@
                     <th>Author</th>
                     <th>Pages</th>
                     <th>Read</th>
+                    <th>Delete</th>
                 </tr>
             </table>
         </div>
+        <dialog>
+            <h1>New book</h1>
+            <form method="dialog">
+                <div class="dialog-title">
+                    <p>Title</p>
+                    <input type="text" id="title" required/>
+                </div>
+                <div class="dialog-author">
+                    <p>Author</p>
+                    <input type="text" id="author" required/>
+                </div>
+                <div class="dialog-pages">
+                    <p>Pages</p>
+                    <input type="number" id="pages" required/> 
+                </div>
+                <div class="dialog-read">
+                    <p>Did you read it?</p><input type="checkbox" id="read"/> 
+                </div>
+                <button type ='submit' id="submit">Submit</button>
+                
+            </form>
+        </dialog>
         <div class="footer">
             <p>2025 The Odin project</p>
         </div>

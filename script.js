@@ -1,6 +1,7 @@
 //variables
 const myLibrary = [{ title: 'hoobit', author: 'me', pages: 100, read: 'Yes' },
   { title: 'the Rabbit', author: 'you', pages: 300, read: 'Yes' }];
+const headers = ['Title', 'Author', 'Pages', 'Read','Delete'];
 
 //functions
 //addrow function adds row to the table that will hold the information
@@ -52,24 +53,55 @@ function bookData(){
         table.appendChild(row);
     }
 }
-
+//creates headers for the table when a book is created
+function addHeaders(){
+    let table = document.querySelector('.table');
+    let row = document.createElement('tr');
+    for(element in headers){
+        let cell = document.createElement('th');
+        cell.textContent = headers[element];
+        row.appendChild(cell);
+    }
+    table.appendChild(row);
+}
+//reset input data in dialog form
+function resetInputData(){
+    dialogTitle.value = '';
+    dialogAuthor.value ='';
+    dialogPages.value ='';
+    dialogRead.checked = false;
+}
 
 
 
 //Dom manipulation
 //HTML elements variables
-const addBook = document.querySelector('.add');
 const dialog = document.querySelector('dialog');
-const closeButon = document.querySelector('#submit');
+const addBookButton = document.querySelector('.add');
+const closeButton = document.querySelector("#close");
+const submit = document.querySelector('#submit');
+const dialogTitle = document.querySelector('#title');
+const dialogAuthor = document.querySelector("#author");
+const dialogPages = document.querySelector('#pages');
+const dialogRead =document.querySelector('#read');
 
 
 
 // event listeners
-addBook.addEventListener('click', ()=>{
+
+addBookButton.addEventListener('click', ()=>{
     dialog.showModal();
 });
 
-closeButon.addEventListener('click', () =>{
+closeButton.addEventListener('click', () =>{
     dialog.close();
 });
 
+submit.addEventListener('click', (event)=>{
+    event.preventDefault()
+    addHeaders();
+    addBookToLibrary(dialogTitle.value, dialogAuthor.value, dialogPages.value, dialogRead.checked);
+    resetInputData();
+    dialog.close();
+
+});

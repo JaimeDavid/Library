@@ -16,18 +16,15 @@
         </div>
         <div class="body">
             <table class="table">
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Pages</th>
-                    <th>Read</th>
-                    <th>Delete</th>
-                </tr>
+
             </table>
         </div>
-        <dialog>
+        <div class="footer">
+            <p>2025 The Odin project</p>
+        </div>
+        <dialog>            
             <h1>New book</h1>
-            <form method="dialog">
+            <form method="post" action="#"></form>
                 <div class="dialog-title">
                     <p>Title</p>
                     <input type="text" id="title" required/>
@@ -43,14 +40,9 @@
                 <div class="dialog-read">
                     <p>Did you read it?</p><input type="checkbox" id="read"/> 
                 </div>
-                <button type ='submit' id="submit">Submit</button>
-                
-            </form>
+                <button  id="submit">Submit</button>
+                <button id="close">Close</button>          
         </dialog>
-        <div class="footer">
-            <p>2025 The Odin project</p>
-        </div>
-        
         <script src="script.js"></script>
     </body>
 </html>         

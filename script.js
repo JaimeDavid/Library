@@ -1,21 +1,10 @@
 //variables
-const myLibrary = [{ title: 'hoobit', author: 'me', pages: 100, read: 'Yes' },
-  { title: 'the Rabbit', author: 'you', pages: 300, read: 'Yes' }];
+let myLibrary = [];
 const headers = ['Title', 'Author', 'Pages', 'Read','Delete'];
+let headersFlag = false;
 
 //functions
-//addrow function adds row to the table that will hold the information
-function addRow(){
-    let table = document.querySelector('.table');
-    let row = document.createElement('tr');
-    row.classList.add("current");
-    for (let i = 0; i < 4; i++){
-        let cell = document.createElement('td')
-        cell.textContent ='h';
-        row.appendChild(cell);
-    }
-    table.appendChild(row);
-}
+
 //Book constructor that will create the book that is required.
 function Book(title, author, pages, read){
     //safeguard for constructor, so it must always be called with new//
@@ -29,40 +18,110 @@ function Book(title, author, pages, read){
     this.read = read;
 }
 
-// Creates a book given the data, adds an ID and saves it in the array.
+// Creates a book given the data,  and saves it in the array.
 function addBookToLibrary(title, author, pages, read){
     
-    let book = new Book(title, author, pages, read);
-    book.id = crypto.randomUUID();
+    let book = new Book(title, author, pages, read); 
+    book['id'] =  crypto.randomUUID();
     myLibrary.push(book);
 
 }
+
+
 //function that read everybook in the array and places it in the table
+function bookData(){   
 
-function bookData(){
-    let table = document.querySelector('.table');
-    for(const book of myLibrary){        
-        let row = document.createElement('tr');
-        console.log(book);
-        for (const key in book){
-            let cell = document.createElement('td')
-            cell.textContent = book[key];
-            row.appendChild(cell);          
-
+    for(const book of myLibrary){
+        // Correctly check if a row with this book's ID already exists.
+        // The `find` method is ideal for this.
+        let existingRow = table.querySelector(`tr[data-id="${book['id']}"]`);
+        
+        // If an existing row is found, skip this book and move to the next one.
+        if (existingRow) {            
+            continue;
         }
-        table.appendChild(row);
+
+        let row = document.createElement('tr');
+        
+        // Loop through the book's properties to create cells.
+        for (const key in book){
+            if(key === 'id'){
+                continue; // Skip the 'id' property since it's used for the data attribute.
+            }
+            let cell = document.createElement('td')
+            if(key === 'read'){
+                let toggleButton = document.createElement('button');                
+                if(book[key] === true){
+                    toggleButton.ClassName = 'read';
+                    toggleButton.textContent = 'Read'
+                }else{
+                    toggleButton.ClassName = 'unread';
+                    toggleButton.textContent = 'Unread'
+                }
+                toggleButton.addEventListener('click',()=>{
+                    if(toggleButton.className === 'read'){
+                        toggleButton.className = 'unread'
+                        toggleButton.textContent = 'Unread'
+                        alert([book]['read']);
+                    }else{
+                        toggleButton.className = 'read'
+                        toggleButton.textContent = 'Read' 
+                        alert([book]['read']);  
+                    }
+                })
+                cell.appendChild(toggleButton);                
+            }else {
+                cell.textContent = book[key]; 
+            }
+                       
+            row.appendChild(cell);
+        }
+        
+        let deleteButton = document.createElement('button');
+        deleteButton.className = 'deleteButton';
+        deleteButton.textContent = 'delete';
+        let deleteCell = document.createElement('td')
+        deleteCell.className = 'delete'
+        deleteButton.addEventListener('click', ()=>{
+  
+            let id = book['id'];
+            console.log(typeof(book['id']));
+            myLibrary = myLibrary.filter(book => book['id'] !== id);
+            row.remove();
+        })
+
+        deleteCell.appendChild(deleteButton);
+        row.appendChild(deleteCell);
+
+
+        // Set the data-id attribute after all cells are created.
+        // It's crucial to set the attribute AFTER the row has been created.
+        row.setAttribute('data-id', book['id']);
+        
+        // Append the new row to the table.
+        table.appendChild(row);        
     }
+}
+
+function deleteRow(id){  
+    
+    row.remove()
 }
 //creates headers for the table when a book is created
 function addHeaders(){
-    let table = document.querySelector('.table');
-    let row = document.createElement('tr');
-    for(element in headers){
-        let cell = document.createElement('th');
-        cell.textContent = headers[element];
-        row.appendChild(cell);
-    }
-    table.appendChild(row);
+    if (headersFlag === false){
+        let table = document.querySelector('.table');
+        let row = document.createElement('tr');
+        for(element in headers){
+            let cell = document.createElement('th');
+            cell.textContent = headers[element];
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+        headersFlag = true;
+
+        }
+
 }
 //reset input data in dialog form
 function resetInputData(){
@@ -72,10 +131,19 @@ function resetInputData(){
     dialogRead.checked = false;
 }
 
+//function creates delete button and puts it in the correct cell
+
+// function deleteButton(){
+//     let parentROW = this.closest('tr[data-id]');
+//     alert(parentROW);
+
+// }
 
 
 //Dom manipulation
 //HTML elements variables
+const table = document.querySelector('.table');
+const row = table.querySelector('tr')
 const dialog = document.querySelector('dialog');
 const addBookButton = document.querySelector('.add');
 const closeButton = document.querySelector("#close");
@@ -83,7 +151,8 @@ const submit = document.querySelector('#submit');
 const dialogTitle = document.querySelector('#title');
 const dialogAuthor = document.querySelector("#author");
 const dialogPages = document.querySelector('#pages');
-const dialogRead =document.querySelector('#read');
+const dialogRead = document.querySelector('#read');
+const deleteButton = document.querySelectorAll('.deleteButton');
 
 
 
@@ -98,10 +167,12 @@ closeButton.addEventListener('click', () =>{
 });
 
 submit.addEventListener('click', (event)=>{
-    event.preventDefault()
-    addHeaders();
+    event.preventDefault();    
     addBookToLibrary(dialogTitle.value, dialogAuthor.value, dialogPages.value, dialogRead.checked);
+    addHeaders();
+    bookData();;
     resetInputData();
     dialog.close();
 
 });
+

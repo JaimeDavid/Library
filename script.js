@@ -62,11 +62,14 @@ function bookData(){
                     if(toggleButton.className === 'read'){
                         toggleButton.className = 'unread'
                         toggleButton.textContent = 'Unread'
-                        alert([book]['read']);
+                        book[key] = false;
+                        
                     }else{
                         toggleButton.className = 'read'
-                        toggleButton.textContent = 'Read' 
-                        alert([book]['read']);  
+                        toggleButton.textContent = 'Read'
+                        book[key] = true;
+                         
+                         
                     }
                 })
                 cell.appendChild(toggleButton);                
@@ -84,8 +87,7 @@ function bookData(){
         deleteCell.className = 'delete'
         deleteButton.addEventListener('click', ()=>{
   
-            let id = book['id'];
-            console.log(typeof(book['id']));
+            let id = book['id'];            
             myLibrary = myLibrary.filter(book => book['id'] !== id);
             row.remove();
         })
@@ -131,13 +133,7 @@ function resetInputData(){
     dialogRead.checked = false;
 }
 
-//function creates delete button and puts it in the correct cell
 
-// function deleteButton(){
-//     let parentROW = this.closest('tr[data-id]');
-//     alert(parentROW);
-
-// }
 
 
 //Dom manipulation
